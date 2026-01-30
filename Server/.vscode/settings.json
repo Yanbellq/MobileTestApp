@@ -1,0 +1,427 @@
+{
+	// 💡 Блок про базовую эргономику: плавная прокрутка, авто-отступы, отключённая миникарта, быстрый выбор подсказок, мультикурсор через Cmd/Ctrl,
+	// Основные настройки редактора
+	"window.openFilesInNewWindow": "off",
+	"editor.tabSize": 2,
+	"editor.insertSpaces": true,
+	"editor.smoothScrolling": true,
+	"editor.minimap.enabled": false,
+	"editor.detectIndentation": false,
+	"editor.suggestSelection": "first",
+	"editor.multiCursorModifier": "ctrlCmd",
+	// 💡 Блок про читабельность: управляем переносом в 100 колонок, докручиваем экран ниже файла, правим парные теги вместе, автозакрываем теги, убираем «шум» служебных символов
+	// Настройки переноса слов
+	"editor.wordWrap": "bounded",
+	"editor.wrappingIndent": "same",
+	"editor.wordWrapColumn": 100,
+	// Прокрутка за пределы последней строки
+	"editor.scrollBeyondLastLine": true,
+	// Связанные редактирования тегов
+	"editor.linkedEditing": true,
+	// Автоматическое закрытие тегов
+	"html.autoClosingTags": true,
+	"javascript.autoClosingTags": true,
+	"typescript.autoClosingTags": true,
+	// Отображение символов
+	"editor.renderControlCharacters": false,
+	// Подсветка неоднозначных символов
+	"editor.unicodeHighlight.ambiguousCharacters": false,
+	// 💡 Минималистичный UI: скрытые полосы прокрутки/панели, компактные вкладки, тонкий «живой» курсор. Фокус — на коде.
+	// Внешний вид
+	"editor.glyphMargin": false,
+	"editor.scrollbar.horizontal": "hidden",
+	"editor.scrollbar.vertical": "visible",
+	"editor.accessibilitySupport": "off",
+	"workbench.iconTheme": "flow-dim",
+	"workbench.activityBar.location": "hidden",
+	"workbench.editor.editorActionsLocation": "hidden",
+	"workbench.editor.empty.hint": "hidden",
+	// 💡 Интерфейс и панель
+	"workbench.panel.showLabels": false,
+	"chat.commandCenter.enabled": false,
+	"window.commandCenter": false,
+	"workbench.layoutControl.enabled": false,
+	"terminal.integrated.stickyScroll.enabled": false,
+	// Настройки курсора
+	"editor.cursorBlinking": "phase",
+	"editor.cursorStyle": "line-thin",
+	"editor.cursorSmoothCaretAnimation": "explicit",
+	// 💡 Отдельные пресеты для видео и работы; лигатуры включены; выравниваем семью шрифтов для editor/CodeLens/инлайнов/чата/консоли
+	// Настройки шрифта
+	// FOR VIDEO:
+	"editor.fontSize": 14,
+	// "editor.fontSize": 16,
+	// FOR WORK:
+	// "editor.fontSize": 19.5,
+	"editor.lineHeight": 22.5,
+	"editor.fontLigatures": true,
+	"editor.fontFamily": "JetBrains Mono, PragmataPro Mono Liga, MonoLisa, Cascadia Code, SF Mono, Fira Code, Ubuntu Mono, monospace",
+	"editor.inlayHints.fontFamily": "PragmataPro",
+	"chat.editor.fontFamily": "PragmataPro",
+	"editor.codeLensFontFamily": "PragmataPro",
+	"debug.console.fontSize": 13.5,
+	// --- АВТОМАТИЗАЦІЯ (Найважливіше для NestJS) ---
+	"editor.formatOnSave": true,
+	"editor.defaultFormatter": "esbenp.prettier-vscode",
+	"editor.codeActionsOnSave": {
+		"source.organizeImports": "explicit",
+		"source.fixAll.eslint": "explicit" // ESLint виправить те, що не зміг Prettier
+	},
+  "editor.bracketPairColorization.enabled": true, // Увімкнув, це корисно для складних Nest сервісів
+	// 💡 Кастомизация подсветки синтаксиса, стилизация комментариев и ключевых слов
+	// Кастомизация подсветки синтаксиса
+	"editor.tokenColorCustomizations": {
+		"textMateRules": [
+			{
+				"scope": [
+					"comment",
+					"entity.name.type.class",
+					"keyword",
+					"constant",
+					"storage.modifier",
+					"storage.type.class.js"
+				],
+				"settings": {
+					"fontStyle": "italic"
+				}
+			},
+			{
+				"scope": [
+					"invalid",
+					"keyword.operator",
+					"constant.numeric.css",
+					"keyword.other.unit.px.css",
+					"constant.numeric.decimal.js",
+					"constant.numeric.json"
+				],
+				"settings": {
+					"fontStyle": ""
+				}
+			}
+		]
+	},
+	// 💡 Настройки терминала — шрифт, курсор
+	// Настройки терминала
+	"terminal.integrated.fontFamily": "monospace",
+	"terminal.integrated.fontSize": 13.5,
+	"terminal.integrated.cursorStyle": "line",
+	"terminal.integrated.cursorBlinking": true,
+	// 💡 Упрощаем работу с файлами, отключаем подтверждения
+	// Настройки обозревателя
+	"explorer.confirmDelete": false,
+	"explorer.confirmDragAndDrop": false,
+	"explorer.compactFolders": false,
+	"workbench.startupEditor": "welcomePage",
+	// 💡 Минимизируем отвлекающие элементы при дебаге
+	// Настройки отладки
+	"debug.toolBarLocation": "hidden",
+	"debug.focusWindowOnBreak": false,
+	"debug.showInlineBreakpointCandidates": false,
+	"debug.showBreakpointsInOverviewRuler": false,
+	// 💡 Emmet — подключение для Blade и React
+	// Настройки Emmet
+	"emmet.includeLanguages": {
+		// "blade": "html",
+		"javascript": "javascriptreact",
+		"svelte": "html"
+	},
+	"emmet.triggerExpansionOnTab": true,
+	// 💡 Prettier и форматирование кода
+	// Настройки форматирования
+	"prettier.semi": true, // Не ставить точки с запятой
+	"prettier.useTabs": false, // Использовать табы вместо пробелов
+	"prettier.singleQuote": false, // Одинарные кавычки в JS/TS
+	// "prettier.jsxSingleQuote": true, // Одинарные кавычки в JSX
+	"prettier.arrowParens": "avoid", // Не использовать скобки в стрелочных функциях с одним аргументом
+	"prettier.htmlWhitespaceSensitivity": "ignore", // Игнорировать пробелы в HTML при форматировании
+	"prettier.singleAttributePerLine": true, // Один атрибут на строку в HTML/JSX
+	"prettier.bracketSameLine": false, // Закрывающий > на новой строке
+	"prettier.printWidth": 80, // Максимальная длина строки — 80 символов
+	"prettier.proseWrap": "always", // Всегда переносить длинный текст (например, в markdown)
+	"prettier.trailingComma": "all", // Не добавлять запятые в конце списков/объектов
+	"prettier.tabWidth": 2, // Ширина таба — 2 пробела (визуально)
+	"editor.inlineSuggest.enabled": true,
+	// 💡 Breadcrumbs отключены полностью
+	// Настройки для Breadcrumbs
+	"breadcrumbs.icons": true,
+	"breadcrumbs.showKeys": false,
+	"breadcrumbs.showFiles": false,
+	"breadcrumbs.symbolPath": "off",
+	"breadcrumbs.showArrays": false,
+	"breadcrumbs.showEvents": false,
+	"breadcrumbs.showFields": false,
+	"breadcrumbs.showClasses": false,
+	"breadcrumbs.showMethods": false,
+	"breadcrumbs.showBooleans": false,
+	"breadcrumbs.showFunctions": false,
+	"breadcrumbs.showConstants": false,
+	"breadcrumbs.showEnumMembers": false,
+	"breadcrumbs.showConstructors": false,
+	// 💡 Настройки JS / TS
+	// Настройки для JS и TS
+	"javascript.updateImportsOnFileMove.enabled": "always",
+	"typescript.updateImportsOnFileMove.enabled": "always",
+	"typescript.preferences.quoteStyle": "single",
+	"javascript.preferences.quoteStyle": "single",
+	"javascript.format.semicolons": "remove",
+	"typescript.format.semicolons": "remove",
+	"js/ts.implicitProjectConfig.experimentalDecorators": true,
+	// 💡 Проверка орфографии (en + ru)
+	// Настройки проверки орфографии
+	"cSpell.language": "en,ru,uk",
+	"cSpell.enabled": true,
+	// 💡 Разрешённые символы Unicode
+	// Разрешенные символы для Unicode Highlight
+	"editor.unicodeHighlight.allowedCharacters": {
+		"а": true,
+		"с": true,
+		"Т": true,
+		"б": true,
+		"е": true,
+		" ": true
+	},
+	"editor.hideCursorInOverviewRuler": true,
+	"git.enableSmartCommit": true,
+	// 💡 Исключаемые файлы
+	// Исключаемые файлы
+	"files.exclude": {
+		"**/.expo": true,
+		"**/.expo-shared": true,
+		"**/.idea": true,
+		"**/.nuxt": true,
+		"**/.next": true,
+		"**/coverage": true
+	},
+	// 💡 Прочие настройки
+	"files.defaultLanguage": "plaintext",
+	"diffEditor.ignoreTrimWhitespace": false,
+	"security.workspace.trust.untrustedFiles": "open",
+	"vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
+	"window.confirmBeforeClose": "keyboardOnly",
+	"git.openRepositoryInParentFolders": "never",
+	"editor.gotoLocation.multipleDefinitions": "goto",
+	"editor.stickyScroll.scrollWithEditor": false,
+	"workbench.tree.enableStickyScroll": false,
+	"editor.stickyScroll.enabled": true,
+	"github.copilot.editor.enableCodeActions": true,
+	// 💡 Кастомные лейблы вкладок для Next.js App Router (удобно для навигации)
+	"workbench.editor.customLabels.patterns": {
+		"**/app/**/[[]*[]]/[[]*[]]/page.tsx": "${dirname(2)}/${dirname(1)}/${dirname}/page.tsx",
+		"**/app/**/[[]*[]]/page.tsx": "${dirname(1)}/${dirname}/page.tsx",
+		"**/app/**/page.tsx": "${dirname}/page.tsx",
+		"**/app/**/[[]*[]]/[[]*[]]/layout.tsx": "${dirname(2)}/${dirname(1)}/${dirname}/layout.tsx",
+		"**/app/**/[[]*[]]/layout.tsx": "${dirname(1)}/${dirname}/layout.tsx",
+		"**/app/**/layout.tsx": "${dirname}/layout.tsx"
+	},
+	// 💡 Markdown — автообновление ссылок при переносе файлов
+	"markdown.updateLinksOnFileMove.enabled": "always",
+	"cSpell.autoFormatConfigFile": true,
+	// 💡 Ассоциации для TailwindCSS
+	"files.associations": {
+		"*.css": "tailwindcss"
+	},
+	// 💡 Подсказки и задержка отображения
+	"editor.quickSuggestions": {
+		"strings": "on"
+	},
+	"editor.quickSuggestionsDelay": 100,
+	// 💡 Телеметрия отключена
+	"telemetry.telemetryLevel": "off",
+	// 💡 Prisma форматирование
+	"[prisma]": {
+		"editor.defaultFormatter": "Prisma.prisma"
+	},
+	// 💡 Отключаем фолдинг и селектор вставки
+	"editor.folding": true,
+	"editor.pasteAs.enabled": false,
+	"editor.pasteAs.showPasteSelector": "never",
+	// 💡 Поддержка Tailwind class attributes
+	"tailwindCSS.classAttributes": ["class", "className", "headerClassName"],
+	// 💡 Advanced New File — фильтры и поведение
+	"advancedNewFile.exclude": {
+		"node_modules": true,
+		"node_modules_electron": true,
+		"dev": true,
+		"dist": true,
+		"ios": true,
+		"android": true,
+		"build": true,
+		".dart_tool": true,
+		"macos": true,
+		"linux": true,
+		"windows": true
+	},
+	"advancedNewFile.showInformationMessages": true,
+	"advancedNewFile.convenienceOptions": ["last", "current", "root"],
+	// 💡 Ассоциации для SVG
+	"workbench.editorAssociations": {
+		"*.svg": "default"
+	},
+	// 💡 Chat / Copilot / AI интеграции
+	"chat.agent.enabled": true,
+	"github.copilot.chat.agent.thinkingTool": true,
+	// 💡 Пользовательские слова для проверки орфографии
+	"cSpell.userWords": ["redgroup"],
+	// 💡 Вкладки и ограничения редактора
+	"workbench.editor.highlightModifiedTabs": true,
+	"terminal.integrated.tabs.defaultIcon": "symbol-event",
+	"workbench.editor.limit.perEditorGroup": true,
+	"workbench.editor.limit.enabled": true,
+	"workbench.editor.limit.value": 8,
+	// 💡 Настройки Copilot
+	"github.copilot.enable": {
+		"*": true,
+		"plaintext": true,
+		"markdown": false,
+		"scminput": false
+	},
+	"workbench.editor.tabSizing": "shrink",
+	"window.density.editorTabHeight": "compact",
+	"svelte.enable-ts-plugin": true,
+	"workbench.colorTheme": "Monokai Pro (Filter Spectrum)",
+	"workbench.preferredDarkColorTheme": "Lunar Eclipse Dark",
+	"workbench.preferredLightColorTheme": "Tokyo Night Light",
+	"github.copilot.nextEditSuggestions.enabled": true,
+	"workbench.statusBar.visible": false,
+	// "terminal.integrated.profiles.windows": {
+	// 	"PowerShell": {
+	// 		"source": "PowerShell",
+	// 		"icon": "terminal-powershell"
+	// 	},
+	// 	"Command Prompt": {
+	// 		"path": [
+	// 			"${env:windir}\\Sysnative\\cmd.exe",
+	// 			"${env:windir}\\System32\\cmd.exe"
+	// 		],
+	// 		"args": [],
+	// 		"icon": {
+	// 			"id": "terminal-cmd"
+	// 		}
+	// 	},
+	// 	"Git Bash": {
+	// 		"path": "C:\\Program Files\\Git\\bin\\bash.exe",
+	// 		"args": ["--login", "-i"]
+	// 	}
+	// },
+	"terminal.integrated.defaultProfile.windows": "Git Bash",
+	"files.autoSave": "afterDelay",
+	"todo-tree.highlights.enabled": false,
+	"better-comments.tags": [
+		{
+			"tag": "?",
+			"color": "#BA68C8",
+			"bold": false,
+			"strikethrough": false,
+			"underline": false,
+			"italic": false,
+			"backgroundColor": "transparent"
+		},
+		{
+			"tag": "*",
+			"color": "#98C379",
+			"bold": false,
+			"strikethrough": false,
+			"underline": false,
+			"italic": false,
+			"backgroundColor": "transparent"
+		},
+		{
+			"tag": "todo",
+			"color": "#FF8C00",
+			"bold": false,
+			"strikethrough": false,
+			"underline": false,
+			"italic": false,
+			"backgroundColor": "transparent"
+		},
+		{
+			"tag": "fix",
+			"color": "#FF2D00",
+			"bold": true,
+			"underline": false,
+			"strikethrough": false,
+			"italic": false,
+			"backgroundColor": "transparent"
+		},
+		{
+			"tag": "link",
+			"color": "#3ea8ff",
+			"bold": true,
+			"underline": false,
+			"strikethrough": false,
+			"italic": false,
+			"backgroundColor": "transparent"
+		},
+		{
+			"tag": "note",
+			"color": "#f4d13d",
+			"bold": true,
+			"underline": false,
+			"strikethrough": false,
+			"italic": false,
+			"backgroundColor": "transparent"
+		},
+		{
+			"tag": "review",
+			"color": "#64DD17",
+			"bold": true,
+			"underline": false,
+			"strikethrough": false,
+			"italic": false,
+			"backgroundColor": "transparent"
+		},
+		{
+			"tag": "section",
+			"color": "#7d5afc",
+			"bold": true,
+			"underline": false,
+			"strikethrough": false,
+			"italic": false,
+			"backgroundColor": "transparent"
+		}
+	],
+	"workbench.productIconTheme": "a-file-icon-vscode-product-icon-theme",
+	"gitlens.ai.model": "vscode",
+	"gitlens.ai.vscode.model": "copilot:gpt-4.1",
+	"chat.instructionsFilesLocations": {
+		".github/instructions": true,
+		"C:\\Users\\Max\\AppData\\Local\\Temp\\postman-collections-post-response.instructions.md": true,
+		"C:\\Users\\Max\\AppData\\Local\\Temp\\postman-collections-pre-request.instructions.md": true,
+		"C:\\Users\\Max\\AppData\\Local\\Temp\\postman-folder-post-response.instructions.md": true,
+		"C:\\Users\\Max\\AppData\\Local\\Temp\\postman-folder-pre-request.instructions.md": true,
+		"C:\\Users\\Max\\AppData\\Local\\Temp\\postman-http-request-post-response.instructions.md": true,
+		"C:\\Users\\Max\\AppData\\Local\\Temp\\postman-http-request-pre-request.instructions.md": true,
+		"/var/folders/x7/cs1wlywn69j_gcv36vrdgwq80000gn/T/postman-collections-post-response.instructions.md": true,
+		"/var/folders/x7/cs1wlywn69j_gcv36vrdgwq80000gn/T/postman-collections-pre-request.instructions.md": true,
+		"/var/folders/x7/cs1wlywn69j_gcv36vrdgwq80000gn/T/postman-folder-post-response.instructions.md": true,
+		"/var/folders/x7/cs1wlywn69j_gcv36vrdgwq80000gn/T/postman-folder-pre-request.instructions.md": true,
+		"/var/folders/x7/cs1wlywn69j_gcv36vrdgwq80000gn/T/postman-http-request-post-response.instructions.md": true,
+		"/var/folders/x7/cs1wlywn69j_gcv36vrdgwq80000gn/T/postman-http-request-pre-request.instructions.md": true
+	},
+	"redhat.telemetry.enabled": false,
+	"terminal.integrated.profiles.osx": {
+		"bash": {
+			"path": "/bin/bash",
+			"args": ["-l"]
+		},
+		"zsh": {
+			"path": "zsh",
+			"args": ["-l"]
+		},
+		"fish": {
+			"path": "fish",
+			"args": ["-l"]
+		},
+		"tmux": {
+			"path": "tmux",
+			"icon": "terminal-tmux"
+		},
+		"pwsh": {
+			"path": "pwsh",
+			"icon": "terminal-powershell"
+		}
+	},
+	"[snippets]": {
+		"editor.defaultFormatter": "vscode.json-language-features"
+	},
+}
