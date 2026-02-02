@@ -11,11 +11,8 @@ export function useTaskDetailsLogic(taskId: number | undefined) {
 	const router = useRouter()
 	const { user } = useAuth()
 	const { task, loading, error, refetch } = useTaskDetails(taskId)
-	// Use offers from task instead of separate API call
 	const offers = useMemo(() => task?.offers ?? [], [task?.offers])
 
-	console.log('DEBUG useTaskDetailsLogic: TASK -> ', task)
-	console.log('DEBUG useTaskDetailsLogic: OFFERS -> ', offers)
 	const offersLoading = loading
 
 	const [finalPrice, setFinalPrice] = useState<number | null>(null)
@@ -39,7 +36,7 @@ export function useTaskDetailsLogic(taskId: number | undefined) {
 
 	const hasApplied = useMemo(() => {
 		if (!user || !offers.length) return false
-		return offers.some(offer => offer.userId === user.id) // ✅ Використовуємо camelCase
+		return offers.some(offer => offer.userId === user.id)
 	}, [user, offers])
 
 	const acceptedOffer = useMemo(() => {
@@ -48,44 +45,6 @@ export function useTaskDetailsLogic(taskId: number | undefined) {
 	}, [task?.offer_id, offers])
 	const acceptedOfferLoading = offersLoading || loading
 
-	// DEBUG
-	useEffect(() => {
-		console.log('DEBUG useTaskDetailsLogic:', {
-			isEmployer,
-			isMyTask,
-			isWorker,
-			offers: offers.length,
-			assignedWorker,
-			user_id: user?.id,
-			author_id: task?.authorId,
-			task_status: task?.status,
-			showOffers: isEmployer && isMyTask && offers.length > 0,
-			showTaskAssignedToOthers:
-				isWorker &&
-				!assignedWorker &&
-				(task?.status === 'ASSIGNED' ||
-					task?.status === 'APPLIED' ||
-					task?.status === 'COMPLETED'),
-			offers_data: offers.map(o => ({
-				id: o.id,
-				user_id: o.userId,
-				is_assigned: o.isAssigned,
-				task_id: o.taskId
-			}))
-		})
-	}, [
-		isEmployer,
-		isMyTask,
-		isWorker,
-		offers.length,
-		assignedWorker,
-		user?.id,
-		task?.authorId,
-		task?.status,
-		offers
-	])
-
-	// Visibility flags
 	const visibility = useMemo(
 		() => ({
 			showOffers: !!(isEmployer && isMyTask && offers.length > 0),
@@ -120,7 +79,6 @@ export function useTaskDetailsLogic(taskId: number | undefined) {
 		[isEmployer, isMyTask, isWorker, user, assignedWorker, task, hasApplied]
 	)
 
-	// Computed values
 	const computed = useMemo(
 		() => ({
 			ageLabel: getTaskAge(task?.createdAt),
@@ -241,7 +199,6 @@ export function useTaskDetailsLogic(taskId: number | undefined) {
 	}
 
 	return {
-		// Data
 		task,
 		offers,
 		loading,
@@ -249,7 +206,6 @@ export function useTaskDetailsLogic(taskId: number | undefined) {
 		offersLoading,
 		acceptedOffer,
 		acceptedOfferLoading,
-		// State
 		priceState: {
 			finalPrice,
 			isEditingPrice,
@@ -266,10 +222,8 @@ export function useTaskDetailsLogic(taskId: number | undefined) {
 			completingTask,
 			payingTask
 		},
-		// Computed
 		computed,
 		visibility,
-		// Handlers
 		handlers: {
 			onPriceInputChange: setPriceInput,
 			onSavePrice: handleSavePrice,

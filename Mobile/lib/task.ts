@@ -77,7 +77,6 @@ export async function fetchMyTasks(
 
 		params.append('sort', sortOption)
 
-		// For WORKER: fetch tasks assigned to them; For EMPLOYER: fetch their own tasks
 		const endpoint = userType === 'WORKER' ? '/tasks/assigned' : '/tasks/my'
 
 		const response = await apiClient.get<any[]>(
