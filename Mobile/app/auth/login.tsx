@@ -1,3 +1,4 @@
+import { PAGES } from '@/config/pages.config'
 import { useAuth } from '@/hooks/useAuth'
 import { signInWithEmail } from '@/lib/auth'
 import { Link, useRouter } from 'expo-router'
@@ -24,6 +25,7 @@ const Login = () => {
 	const { refreshUser } = useAuth()
 
 	const handleLogin = async () => {
+		setErrors({})
 		const newErrors: { email?: string; password?: string; root?: string } = {}
 		if (!email) newErrors.email = 'Email is required'
 		if (!password) newErrors.password = 'Password is required'
@@ -35,17 +37,12 @@ const Login = () => {
 
 		try {
 			setSubmitting(true)
-			setErrors({}) // Clear previous errors
 			await signInWithEmail({ email, password })
 			// Токен вже збережений в signInWithEmail, оновлюємо user стан
 			await refreshUser()
-			router.replace('/')
+			router.replace(PAGES.HOME)
 		} catch (e: any) {
-			console.log(e)
-			setErrors(prev => ({
-				...prev,
-				root: e.message || 'Invalid email or password'
-			}))
+			setErrors({ root: e.message || 'Invalid email or password' })
 		} finally {
 			setSubmitting(false)
 		}
@@ -124,7 +121,7 @@ const Login = () => {
 				<View style={styles.footer}>
 					<Text style={styles.footerText}>{"Don't have an account?"}</Text>
 					<Link
-						href="/auth/register"
+						href={PAGES.REGISTER}
 						style={styles.footerLink}
 					>
 						Sign Up
@@ -191,7 +188,7 @@ const styles = StyleSheet.create({
 	errorText: {
 		color: '#FF4C4C',
 		fontSize: 12,
-		marginTop: -4
+		textAlign: 'left'
 	},
 
 	submitButton: {

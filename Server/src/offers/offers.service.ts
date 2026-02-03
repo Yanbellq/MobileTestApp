@@ -22,7 +22,7 @@ export class OffersService {
     });
   }
 
-  async assign(offerId: number, taskId: number) {
+  async assign(offerId: number, taskId: number, userId: string) {
     const offer = await this.prisma.offer.findUnique({
       where: { id: offerId },
     });
@@ -39,24 +39,26 @@ export class OffersService {
       throw new NotFoundException('Завдання не знайдено');
     }
 
-    // Оновити всі пропозиції до завдання
+    // fixed (task-1) task author check
+    if (task.authorId !== userId) {
+      throw new ForbiddenException('Ви не є автором цього завдання');
+    }
+
     await this.prisma.offer.updateMany({
       where: { taskId },
       data: { isAssigned: false },
     });
 
-    // Позначити обрану пропозицію як призначену
     await this.prisma.offer.update({
       where: { id: offerId },
       data: { isAssigned: true },
     });
 
-    // Оновити статус завдання
     return this.prisma.task.update({
       where: { id: taskId },
       data: {
         status: 'ASSIGNED',
-        offer_id: offerId, // fixme
+        assignedOfferId: offerId,
         startTask: new Date(),
       },
     });
@@ -66,7 +68,7 @@ export class OffersService {
     const task = await this.prisma.task.findUnique({
       where: { id: taskId },
       include: {
-        offers: true, // ✅ Додати offers для перевірки
+        offers: true,
       },
     });
 
@@ -74,7 +76,6 @@ export class OffersService {
       throw new NotFoundException('Завдання не знайдено');
     }
 
-    // ✅ ВИПРАВЛЕНО: Перевірити чи користувач є assigned worker
     const assignedOffer = task.offers.find(
       (offer) => offer.isAssigned === true && offer.userId === userId,
     );
@@ -85,7 +86,6 @@ export class OffersService {
       );
     }
 
-    // ✅ Перевірити статус
     if (task.status !== 'ASSIGNED') {
       throw new ForbiddenException('Завдання не в статусі ASSIGNED');
     }

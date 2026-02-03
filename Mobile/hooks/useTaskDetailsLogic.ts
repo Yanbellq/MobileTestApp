@@ -40,10 +40,14 @@ export function useTaskDetailsLogic(taskId: number | undefined) {
 	}, [user, offers])
 
 	const acceptedOffer = useMemo(() => {
-		if (!task?.offer_id || !offers.length) return null
+		if (!task?.assignedOfferId || !offers.length) return null
 		return offers.find(o => o.id === task.offer_id) || null
-	}, [task?.offer_id, offers])
+	}, [task?.assignedOfferId, offers])
 	const acceptedOfferLoading = offersLoading || loading
+
+	useEffect(() => {
+		console.log('DEBUG ACCEPTED_OFFER: ', acceptedOffer);
+	}, [acceptedOffer]);
 
 	const visibility = useMemo(
 		() => ({

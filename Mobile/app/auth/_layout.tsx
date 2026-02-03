@@ -1,4 +1,5 @@
 import Header from '@/components/layout/Header'
+import { PAGES } from '@/config/pages.config'
 import { Stack, useRouter } from 'expo-router'
 import { StyleSheet, View } from 'react-native'
 
@@ -11,7 +12,7 @@ export default function RootLayout() {
 				actions={[
 					{
 						label: 'Home',
-						onPress: () => router.replace('/')
+						onPress: () => router.replace(PAGES.HOME)
 					}
 				]}
 			/>

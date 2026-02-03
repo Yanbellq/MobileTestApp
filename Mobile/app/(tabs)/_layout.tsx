@@ -1,4 +1,5 @@
 import Header from '@/components/layout/Header'
+import { PAGES } from '@/config/pages.config'
 import { links } from '@/shared/data/navigation.data'
 import { Tabs, useRouter } from 'expo-router'
 
@@ -11,11 +12,11 @@ export default function RootLayout() {
 				actions={[
 					{
 						label: 'Sign In',
-						onPress: () => router.push('/auth/login')
+						onPress: () => router.push(PAGES.LOGIN)
 					},
 					{
 						label: 'Sign Up',
-						onPress: () => router.push('/auth/register')
+						onPress: () => router.push(PAGES.REGISTER)
 					}
 				]}
 			/>

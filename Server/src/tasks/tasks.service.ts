@@ -185,14 +185,12 @@ export class TasksService {
       );
     }
 
-    // ✅ ВИПРАВ: Конвертуємо status в enum та правильно передаємо category
     const taskData: Prisma.TaskCreateInput = {
       title: createTaskDto.title,
       description: createTaskDto.description,
       budget: new Prisma.Decimal(String(createTaskDto.budget)),
       location: createTaskDto.location,
       address: createTaskDto.address || undefined,
-      // categoryId: createTaskDto.category,
       category: {
         connect: { id: createTaskDto.category },
       },
@@ -228,8 +226,7 @@ export class TasksService {
       throw new ForbiddenException('Ви не можете редагувати це завдання');
     }
 
-    // ✅ ВИПРАВ: Конвертуємо status у enum якщо він є
-    const updateData: any = {};
+    const updateData: Prisma.TaskUpdateInput = {};
 
     if (updateTaskDto.title !== undefined)
       updateData.title = updateTaskDto.title;
@@ -242,13 +239,14 @@ export class TasksService {
     if (updateTaskDto.address !== undefined)
       updateData.address = updateTaskDto.address;
     if (updateTaskDto.category !== undefined)
-      updateData.category = updateTaskDto.category;
+      updateData.category = {
+        connect: { id: updateTaskDto.category },
+      };
     if (updateTaskDto.startTask !== undefined)
       updateData.startTask = updateTaskDto.startTask;
     if (updateTaskDto.endTask !== undefined)
       updateData.endTask = updateTaskDto.endTask;
 
-    // Конвертуємо status у enum
     if (updateTaskDto.status !== undefined) {
       const status = this.stringToTaskStatus(updateTaskDto.status);
       if (status) {
@@ -285,12 +283,11 @@ export class TasksService {
       where: { id },
       data: {
         status: TaskStatus.OPEN,
-        offer_id: null,
+        assignedOfferId: null,
       },
     });
   }
 
-  // ✅ Допоміжний метод для конвертації string в enum
   private stringToTaskStatus(status: string): TaskStatus | null {
     if (status.toUpperCase() === 'ALL') return null;
 
@@ -299,12 +296,12 @@ export class TasksService {
       Assigned: TaskStatus.ASSIGNED,
       Completed: TaskStatus.COMPLETED,
       Applied: TaskStatus.APPLIED,
-      Canceled: TaskStatus.CANCELED, // American spelling
+      Canceled: TaskStatus.CANCELED,
       OPEN: TaskStatus.OPEN,
       ASSIGNED: TaskStatus.ASSIGNED,
       COMPLETED: TaskStatus.COMPLETED,
       APPLIED: TaskStatus.APPLIED,
-      CANCELED: TaskStatus.CANCELED, // American spelling
+      CANCELED: TaskStatus.CANCELED,
     };
     return statusMap[status] || null;
   }

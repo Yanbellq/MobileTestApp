@@ -12,6 +12,9 @@ export class PrismaService extends PrismaClient implements OnModuleInit {
 
     const adapter = new PrismaPg(pool);
     super({ adapter });
+
+    console.log('DB_URL Type:', typeof process.env.DATABASE_URL);
+    console.log('DB_URL Value:', process.env.DATABASE_URL);
   }
 
   async onModuleInit() {

@@ -6,6 +6,9 @@ import { TaskDetailsError } from '@/components/task/TaskDetailsError'
 import { TaskDetailsHeader } from '@/components/task/TaskDetailsHeader'
 import { TaskDetailsLoading } from '@/components/task/TaskDetailsLoading'
 import { useTaskDetailsLogic } from '@/hooks/useTaskDetailsLogic'
+import { createHref } from '@/utils/href'
+import { PAGES } from '@/config/pages.config'
+import { getErrorMessage } from '@/utils/error'
 
 export default function TaskDetailsScreen() {
 	const { id } = useLocalSearchParams<{ id?: string }>()
@@ -47,7 +50,7 @@ export default function TaskDetailsScreen() {
 		if (error || !task) {
 			return (
 				<TaskDetailsError
-					message={error ?? 'Task not found'}
+					message={error ? getErrorMessage(error) : 'Task not found'}
 					onGoBack={router.back}
 				/>
 			)
@@ -80,10 +83,18 @@ export default function TaskDetailsScreen() {
 				onDelete={handlers.onDeleteTask}
 				onUnassign={handlers.onUnassignTask}
 				onEdit={() =>
-					router.push({
-						pathname: '/add-tasks',
-						params: { taskId: String(numericId), isEdit: 'true' }
-					})
+					router.push(
+						{
+							pathname: '/add-tasks',
+							params: { taskId: String(numericId), isEdit: 'true' }
+						}
+						// createHref(
+						// 	PAGES.ADD_TASK, {
+						// 		taskId: String(numericId),
+						// 		isEdit: 'true'
+						// 	}
+						// )
+					)
 				}
 			/>
 			{renderBody()}

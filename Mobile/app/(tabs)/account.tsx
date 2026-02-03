@@ -1,3 +1,4 @@
+import { PAGES } from '@/config/pages.config'
 import { useAuth } from '@/hooks/useAuth'
 import { updatePassword, updateProfile } from '@/lib/auth'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
@@ -48,7 +49,7 @@ const AccountScreen: React.FC = () => {
 				</Text>
 				<TouchableOpacity
 					style={styles.loginButton}
-					onPress={() => router.push('/auth/login')}
+					onPress={() => router.push(PAGES.LOGIN)}
 				>
 					<Text style={styles.loginButtonText}>Log In</Text>
 				</TouchableOpacity>
@@ -310,7 +311,7 @@ const AccountScreen: React.FC = () => {
 					onPress={async () => {
 						try {
 							await logout()
-							router.replace('/auth/login')
+							router.replace(PAGES.HOME)
 						} catch (e) {
 							console.log(e)
 						}

@@ -27,8 +27,9 @@ export class OffersController {
   async assign(
     @Param('id', ParseIntPipe) id: number,
     @Body('taskId', ParseIntPipe) taskId: number,
+    @Req() req,
   ) {
-    return this.offersService.assign(id, taskId);
+    return this.offersService.assign(id, taskId, req.user.userId);
   }
 }
 

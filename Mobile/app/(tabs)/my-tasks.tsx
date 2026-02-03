@@ -17,6 +17,8 @@ import { TaskCard } from '@/components/ui/TaskCard'
 import { useAuth } from '@/hooks/useAuth'
 import { useMyTasks } from '@/hooks/useMyTasks'
 import type { TaskStatus } from '@/shared/types/task.interface'
+import { createHref } from '@/utils/href'
+import { PAGES } from '@/config/pages.config'
 
 type TaskStatusFilter = TaskStatus | 'All'
 
@@ -71,6 +73,7 @@ const MyTasks: React.FC = () => {
 					<Link
 						key={task.id}
 						href={`/task/${task.id}`}
+						// href={createHref(PAGES.TASK, { id: String(task.id) })}
 						asChild
 					>
 						<TaskCard

@@ -1,7 +1,11 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import axios, { AxiosInstance } from 'axios'
+import { Platform } from 'react-native'
 
-const API_BASE_URL = process.env.EXPO_PUBLIC_API_URL
+// const API_BASE_URL = process.env.EXPO_PUBLIC_API_URL 
+const API_BASE_URL = Platform.OS === 'android' 
+  ? process.env.EXPO_PUBLIC_API_ANDROID_URL 
+  : process.env.EXPO_PUBLIC_API_URL;
 
 /**
  * Створює HTTP клієнт з автоматичною відправкою JWT токена
@@ -25,7 +29,6 @@ apiClient.interceptors.request.use(
 				config.headers.Authorization = `Bearer ${token}`
 			}
 		} catch (error) {
-			console.error('Помилка при читанні токена:', error)
 		}
 		return config
 	},
@@ -42,8 +45,16 @@ apiClient.interceptors.response.use(
 	async error => {
 		if (error.response?.status === 401) {
 			await AsyncStorage.removeItem('authToken')
-			console.warn('Токен спирився, перенаправляємо на вхід')
 		}
+
+		if (error.response && error.response.data && error.response.data.message) {
+			const customError = {
+				message: error.response.data.message,
+				statusCode: error.response.status
+			}
+			return Promise.reject(new Error(customError.message))
+		}
+
 		return Promise.reject(error)
 	}
 )

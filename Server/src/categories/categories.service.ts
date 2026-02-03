@@ -9,7 +9,7 @@ import { CreateCategoryDto, UpdateCategoryDto } from './categories.dto';
 @Injectable()
 export class CategoriesService {
   constructor(private readonly prisma: PrismaService) {}
-  
+
   async create(createCategoryDto: CreateCategoryDto) {
     try {
       return await this.prisma.category.create({

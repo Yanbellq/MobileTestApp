@@ -1,3 +1,4 @@
+import { GOOGLE_AUTOCOMPLETE } from '@/config/base.config'
 import { useAuth } from '@/hooks/useAuth'
 import { useCategories } from '@/hooks/useCategories'
 import { useTaskDetails } from '@/hooks/useTaskDetails'
@@ -286,11 +287,7 @@ export default function AddTasks() {
 									onPress={(data, details = null) => {
 										setLocation(data.description)
 									}}
-									query={{
-										key: 'AIzaSyBlZcLRYc_hPxQ1uaQMQZSoM9x5VGlzvYQ',
-										language: 'en',
-										types: '(cities)'
-									}}
+									query={GOOGLE_AUTOCOMPLETE.CITY}
 									styles={{
 										textInput: styles.input
 									}}
@@ -309,11 +306,7 @@ export default function AddTasks() {
 									onPress={(data, details = null) => {
 										setAddress(data.description)
 									}}
-									query={{
-										key: '',
-										language: 'en',
-										types: 'address'
-									}}
+									query={GOOGLE_AUTOCOMPLETE.ADDRESS}
 									styles={{
 										textInput: styles.input
 									}}
