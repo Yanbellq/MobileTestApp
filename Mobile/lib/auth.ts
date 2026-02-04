@@ -10,7 +10,7 @@ export async function updateProfile(options: {
 	try {
 		await apiClient.patch('/auth/profile', options)
 	} catch (error: any) {
-		const message = error.response?.data?.message || 'Помилка оновлення профілю'
+		const message = error.message || 'Помилка оновлення профілю'
 		throw new Error(message)
 	}
 }
@@ -23,7 +23,7 @@ export async function updatePassword(options: {
 	try {
 		await apiClient.patch('/auth/password', options)
 	} catch (error: any) {
-		const message = error.response?.data?.message || 'Помилка зміни паролю'
+		const message = error.message || 'Помилка зміни паролю'
 		throw new Error(message)
 	}
 }
@@ -58,7 +58,7 @@ export async function signUpWithEmail(options: {
 
 		return response.data
 	} catch (error: any) {
-		const message = error.response?.data?.message || 'Помилка реєстрації'
+		const message = error.message || 'Помилка реєстрації'
 		throw new Error(message)
 	}
 }
@@ -78,7 +78,7 @@ export async function signInWithEmail(options: {
 
 		return response.data
 	} catch (error: any) {
-		const message = error.response?.data?.message || 'Помилка входу'
+		const message = error.message || 'Помилка входу'
 		throw new Error(message)
 	}
 }
@@ -92,7 +92,6 @@ export async function signOut(): Promise<void> {
 		try {
 			await apiClient.post('/auth/logout')
 		} catch (error) {
-			console.warn('Помилка при виклику logout на сервері:', error)
 		}
 	} catch (error: any) {
 		throw new Error('Помилка при виході')

@@ -11,8 +11,8 @@ async function down() {
   await prisma.$executeRaw`TRUNCATE TABLE "categories" RESTART IDENTITY CASCADE`;
   await prisma.$executeRaw`TRUNCATE TABLE "offers" RESTART IDENTITY CASCADE`;
   await prisma.$executeRaw`TRUNCATE TABLE "tasks" RESTART IDENTITY CASCADE`;
-  await prisma.$executeRaw`TRUNCATE TABLE "users" RESTART IDENTITY CASCADE`;
-  await prisma.$executeRaw`TRUNCATE TABLE "profiles" RESTART IDENTITY CASCADE`;
+  // await prisma.$executeRaw`TRUNCATE TABLE "users" RESTART IDENTITY CASCADE`;
+  // await prisma.$executeRaw`TRUNCATE TABLE "profiles" RESTART IDENTITY CASCADE`;
 }
 
 export async function main() {

@@ -60,6 +60,7 @@ export class TasksController {
   }
 
   @Get(':id')
+  @UseGuards(JwtAuthGuard)
   async findOne(@Param('id', ParseIntPipe) id: number) {
     return this.tasksService.findOne(id);
   }

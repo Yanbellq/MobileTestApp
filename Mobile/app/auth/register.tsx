@@ -1,3 +1,4 @@
+import { PAGES } from '@/config/pages.config'
 import { useAuth } from '@/hooks/useAuth'
 import { signUpWithEmail } from '@/lib/auth'
 import { UserType } from '@/shared/types/user.interface'
@@ -19,6 +20,7 @@ const Register = () => {
 	const [password, setPassword] = useState('')
 	const [confirmPassword, setConfirmPassword] = useState('')
 	const [errors, setErrors] = useState<{
+		root?: string
 		name?: string
 		email?: string
 		password?: string
@@ -29,6 +31,7 @@ const Register = () => {
 	const { refreshUser } = useAuth()
 
 	const handleRegister = async () => {
+		setErrors({})
 		const newErrors: {
 			name?: string
 			email?: string
@@ -65,13 +68,9 @@ const Register = () => {
 			})
 			// Токен вже збережений в signUpWithEmail, оновлюємо user стан
 			await refreshUser()
-			router.replace('/')
+			router.replace(PAGES.HOME)
 		} catch (e: any) {
-			setErrors(prev => ({
-				...prev,
-				root: e.message || 'Registration failed'
-			}))
-			console.log(e)
+			setErrors({ root: e.message || 'Registration failed' })
 		} finally {
 			setSubmitting(false)
 		}
@@ -86,7 +85,11 @@ const Register = () => {
 				<Text style={styles.title}>Registration</Text>
 
 				<Text style={styles.subtitle}>Create a new account</Text>
-
+				{errors.root && (
+					<View style={styles.errorBanner}>
+						<Text style={styles.errorBannerText}>{errors.root}</Text>
+					</View>
+				)}
 				<View style={styles.fieldGroup}>
 					<Text style={styles.label}>Name</Text>
 
@@ -97,7 +100,11 @@ const Register = () => {
 						value={name}
 						onChangeText={text => {
 							setName(text)
-							setErrors(prev => ({ ...prev, name: undefined }))
+							setErrors(prev => ({
+								...prev,
+								name: undefined,
+								root: undefined
+							}))
 						}}
 					/>
 					{errors.name && <Text style={styles.errorText}>{errors.name}</Text>}
@@ -161,7 +168,11 @@ const Register = () => {
 						value={email}
 						onChangeText={text => {
 							setEmail(text)
-							setErrors(prev => ({ ...prev, email: undefined }))
+							setErrors(prev => ({
+								...prev,
+								email: undefined,
+								root: undefined
+							}))
 						}}
 					/>
 					{errors.email && <Text style={styles.errorText}>{errors.email}</Text>}
@@ -180,7 +191,8 @@ const Register = () => {
 							setPassword(text)
 							setErrors(prev => ({
 								...prev,
-								password: undefined
+								password: undefined,
+								root: undefined
 							}))
 						}}
 					/>
@@ -202,7 +214,8 @@ const Register = () => {
 							setConfirmPassword(text)
 							setErrors(prev => ({
 								...prev,
-								confirmPassword: undefined
+								confirmPassword: undefined,
+								root: undefined
 							}))
 						}}
 					/>
@@ -225,7 +238,7 @@ const Register = () => {
 				<View style={styles.footer}>
 					<Text style={styles.footerText}>You already sign in?</Text>
 					<Link
-						href="/auth/login"
+						href={PAGES.LOGIN}
 						style={styles.footerLink}
 					>
 						Sign in
@@ -303,9 +316,22 @@ const styles = StyleSheet.create({
 	errorText: {
 		color: '#FF4C4C',
 		fontSize: 12,
-		marginTop: -4
+		textAlign: 'left'
+	},
+	errorBanner: {
+		backgroundColor: 'rgba(255, 76, 76, 0.1)',
+		borderWidth: 1,
+		borderColor: '#FF4C4C',
+		borderRadius: 8,
+		padding: 12,
+		marginBottom: 16
 	},
 
+	errorBannerText: {
+		color: '#FF4C4C',
+		fontSize: 14,
+		textAlign: 'center'
+	},
 	userTypeRow: {
 		flexDirection: 'row',
 

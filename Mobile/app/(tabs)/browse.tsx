@@ -11,6 +11,8 @@ import { useCategories } from '@/hooks/useCategories'
 import { useTasks } from '@/hooks/useTasks'
 import { sortTasks } from '@/utils/taskFilters'
 import { ITask } from '@/shared/types/task.interface'
+import { createHref } from '@/utils/href'
+import { PAGES } from '@/config/pages.config'
 
 const BrowseTasks: React.FC = () => {
 	const { categories } = useCategories()
@@ -89,6 +91,7 @@ const BrowseTasks: React.FC = () => {
 					<Link
 						key={task.id}
 						href={`/task/${task.id}`}
+						// href={createHref(PAGES.TASK, { id: String(task.id) })}
 						asChild
 					>
 						<TaskCard

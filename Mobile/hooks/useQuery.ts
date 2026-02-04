@@ -1,3 +1,4 @@
+import { TErrorResponse } from '@/shared/types/common.type'
 import { useEffect, useState } from 'react'
 
 type UseQueryOptions<T> = {
@@ -16,7 +17,7 @@ export function useQuery<T>(
 
 	const [data, setData] = useState<T | null>(initialData ?? null)
 	const [loading, setLoading] = useState<boolean>(enabled)
-	const [error, setError] = useState<string | null>(null)
+	const [error, setError] = useState<TErrorResponse | null>(null)
 
 	useEffect(() => {
 		if (!enabled) {

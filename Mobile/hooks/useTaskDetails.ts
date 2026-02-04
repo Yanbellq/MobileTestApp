@@ -31,6 +31,7 @@ export function useTaskDetails(taskId?: number) {
 
 					return null
 				} catch (err) {
+					console.log('DEBUG ERRORRRR -> ', err)
 					throw err
 				}
 			},

@@ -6,6 +6,7 @@ import {
 	useEffect,
 	useState
 } from 'react'
+import { useRouter, useSegments } from 'expo-router'
 
 import apiClient from '@/lib/apiClient'
 import type { AuthUser } from '@/shared/types/user.interface'
@@ -24,28 +25,20 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 	const [user, setUser] = useState<AuthUser | null>(null)
 	const [loading, setLoading] = useState(true)
 	const [isAuthenticated, setIsAuthenticated] = useState(false)
+	const router = useRouter()
+	const segments = useSegments()
 
-	const hydrateUser = async (userId: string) => {
-		try {
-			const response = await apiClient.get(`/users/${userId}`)
+	useEffect(() => {
+		if (loading) return
 
-			setUser({
-				id: response.data.id,
-				email: response.data.email ?? null,
-				profile: {
-					name: response.data.profile?.name ?? null,
-					role: response.data.profile?.role ?? null,
-					avatarUrl: response.data.profile?.avatarUrl ?? null
-				},
-				createdAt: response.data.createdAt ?? null
-			})
-			setIsAuthenticated(true)
-		} catch (error) {
-			console.error('Failed to load profile:', error)
-			setUser(null)
-			setIsAuthenticated(false)
+		const inAuthGroup = segments[0] === 'auth'
+
+		if (!isAuthenticated && !inAuthGroup) {
+			router.replace('/auth/login')
+		} else if (isAuthenticated && inAuthGroup) {
+			router.replace('/')
 		}
-	}
+	}, [isAuthenticated, loading, segments, router])
 
 	const logout = async () => {
 		try {
@@ -53,13 +46,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 			setIsAuthenticated(false)
 			await AsyncStorage.removeItem('authToken')
 
-			try {
-				await apiClient.post('/auth/logout')
-			} catch (error) {
-				console.warn('Помилка при виклику logout на сервері:', error)
-			}
+			await apiClient.post('/auth/logout')
+			
 		} catch (error) {
-			console.error('Failed to logout:', error)
 			throw error
 		}
 	}
@@ -82,14 +71,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 					role: response.data.profile?.role ?? null,
 					avatarUrl: response.data.profile?.avatarUrl ?? null
 				},
-				createdAt: response.data.profile.createdAt ?? null
+				createdAt: response.data.profile?.createdAt ?? null
 			}
 			setUser(returnData);
-			console.log("DEBUG useAuth auth/me USER Response : ", response.data)
-			console.log("DEBUG useAuth auth/me USER userState : ", returnData)
 			setIsAuthenticated(true)
 		} catch (error) {
-			console.error('Failed to refresh user:', error)
 			await AsyncStorage.removeItem('authToken')
 			setUser(null)
 			setIsAuthenticated(false)
@@ -103,13 +89,23 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
 				if (token) {
 					const response = await apiClient.get('/auth/me')
-					await hydrateUser(response.data.id)
+					const returnData = {
+						id: response.data.id,
+						email: response.data.email ?? null,
+						profile: {
+							name: response.data.profile?.name ?? null,
+							role: response.data.profile?.role ?? null,
+							avatarUrl: response.data.profile?.avatarUrl ?? null
+						},
+						createdAt: response.data.profile?.createdAt ?? null
+					}
+					setUser(returnData);
+					setIsAuthenticated(true)
 				} else {
 					setUser(null)
 					setIsAuthenticated(false)
 				}
 			} catch (error) {
-				console.error('Failed to initialize auth state:', error)
 				await AsyncStorage.removeItem('authToken')
 				setUser(null)
 				setIsAuthenticated(false)

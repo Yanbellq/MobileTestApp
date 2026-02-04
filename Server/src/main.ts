@@ -12,18 +12,19 @@ async function bootstrap() {
     origin: process.env.CORS_ORIGIN?.split(',') || '*',
     credentials: true,
   });
+  // app.enableCors();
 
   app.useGlobalPipes(
     new ValidationPipe({
-      whitelist: true, // видаляє поля, яких немає в DTO
-      forbidNonWhitelisted: true, // видає помилку, якщо є зайві поля
-      transform: true, // автоматично перетворює типи (наприклад, рядок у число)
+      whitelist: true,
+      forbidNonWhitelisted: true,
+      transform: true,
     }),
   );
 
   // useContainer(app.select(AppModule), { fallbackOnErrors: true });
   app.useGlobalInterceptors(new LoggingInterceptor());
 
-  await app.listen(process.env.PORT!);
+  await app.listen(process.env.PORT!, '0.0.0.0');
 }
 bootstrap();

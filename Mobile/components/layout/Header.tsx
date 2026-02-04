@@ -1,3 +1,4 @@
+import { PAGES } from '@/config/pages.config'
 import { useAuth } from '@/hooks/useAuth'
 import { useRouter } from 'expo-router'
 import { useMemo } from 'react'
@@ -21,7 +22,7 @@ const Header = ({ actions = [] }: HeaderProps) => {
 	const handleLogout = async () => {
 		try {
 			await logout()
-			router.replace('/auth/login')
+			router.replace(PAGES.LOGIN)
 		} catch (e) {
 			console.error('Failed to sign out', e)
 		}
