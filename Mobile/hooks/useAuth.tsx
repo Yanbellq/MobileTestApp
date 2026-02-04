@@ -71,7 +71,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 					role: response.data.profile?.role ?? null,
 					avatarUrl: response.data.profile?.avatarUrl ?? null
 				},
-				createdAt: response.data.profile.createdAt ?? null
+				createdAt: response.data.profile?.createdAt ?? null
 			}
 			setUser(returnData);
 			setIsAuthenticated(true)
@@ -97,7 +97,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 							role: response.data.profile?.role ?? null,
 							avatarUrl: response.data.profile?.avatarUrl ?? null
 						},
-						createdAt: response.data.profile.createdAt ?? null
+						createdAt: response.data.profile?.createdAt ?? null
 					}
 					setUser(returnData);
 					setIsAuthenticated(true)

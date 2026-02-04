@@ -31,5 +31,5 @@ export function isAssignedWorker(
   }
 
   // Перевірка 2: Чи цей offer призначений на таску (опціонально)
-  return task.offer_id === userOffer.id || task.status === 'ASSIGNED'
+  return task.assignedOfferId === userOffer.id || task.status === 'ASSIGNED'
 }

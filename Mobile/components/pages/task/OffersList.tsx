@@ -36,7 +36,7 @@ export const OffersList: React.FC<OffersListProps> = ({
 		<View style={styles.offersList}>
 			{offers.map(offer => {
 				const workerName = offer.profile?.name || 'Unknown'
-				const isAssigned = task.offer_id === offer.id
+				const isAssigned = task.assignedOfferId === offer.id
 				const isAssigning = assigningOfferId === offer.id
 
 				return (

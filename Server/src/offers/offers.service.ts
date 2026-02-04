@@ -31,6 +31,10 @@ export class OffersService {
       throw new NotFoundException('Пропозиція не знайдена');
     }
 
+    if (offer.taskId !== taskId) {
+      throw new ForbiddenException('Пропозиція не належить до цього завдання');
+    }
+
     const task = await this.prisma.task.findUnique({
       where: { id: taskId },
     });
@@ -39,7 +43,6 @@ export class OffersService {
       throw new NotFoundException('Завдання не знайдено');
     }
 
-    // fixed (task-1) task author check
     if (task.authorId !== userId) {
       throw new ForbiddenException('Ви не є автором цього завдання');
     }

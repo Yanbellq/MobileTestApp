@@ -14,7 +14,8 @@ export interface ITask {
 	startTask: string | null
 	endTask: string | null
 	status: TaskStatus
-	offer_id: number | null
+	// offer_id: number | null
+	assignedOfferId?: number | null
 	isPayed: boolean
 	offersCount?: number
 	offers?: IOffer[]

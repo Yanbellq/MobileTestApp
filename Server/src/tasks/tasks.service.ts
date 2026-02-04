@@ -111,6 +111,7 @@ export class TasksService {
       offers: {
         some: {
           userId: userId,
+          isAssigned: true,
         },
       },
     };
@@ -278,6 +279,11 @@ export class TasksService {
     if (task.authorId !== userId) {
       throw new ForbiddenException('Ви не можете скасувати призначення');
     }
+
+    await this.prisma.offer.updateMany({
+      where: { taskId: id },
+      data: { isAssigned: false },
+    });
 
     return this.prisma.task.update({
       where: { id },

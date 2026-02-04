@@ -41,7 +41,7 @@ export function useTaskDetailsLogic(taskId: number | undefined) {
 
 	const acceptedOffer = useMemo(() => {
 		if (!task?.assignedOfferId || !offers.length) return null
-		return offers.find(o => o.id === task.offer_id) || null
+		return offers.find(o => o.id === task.assignedOfferId) || null
 	}, [task?.assignedOfferId, offers])
 	const acceptedOfferLoading = offersLoading || loading
 
